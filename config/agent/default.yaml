@@ -1,0 +1,9 @@
+# For evaluation and fine-tuning on in-domain, target houses, and iTHOR
+agent_mode: "default"
+field_of_view: 65
+
+# Agent camera's height from crouching and standing.
+# NOTE: The agent does not crouch, so 0.9009992 isn't included.
+valid_agent_heights:
+  - 1.5759992
+  # - 0.9009992

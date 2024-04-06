@@ -1,0 +1,211 @@
+defaults:
+  - agent: ???
+  - target_object_types: ???
+  - override hydra/hydra_logging: disabled
+  - override hydra/job_logging: disabled
+  - _self_
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+procthor:
+  num_train_houses: null
+  num_val_houses: null
+  num_test_houses: null
+
+  # Probability of randomizing the object materials for a given episode
+  # during training.
+  p_randomize_materials: 0.8
+
+ithor:
+  # Probability of shuffling the objects with InitialRandomSpawn for a given
+  # episode during iTHOR training.
+  p_shuffle_objects: 0
+
+hidden_size: 512
+
+model:
+  add_prev_actions_embedding: true
+  nn_kwargs:
+    hidden_size: ${hidden_size}
+    num_tx_layers: 3
+    num_tx_heads: 8
+    action_embed_size: 7  # 6 + null action
+    goal_dims: 32
+    dino_compressor_hidden_out_dims:
+      - 384
+      - ${hidden_size}
+    combiner_hidden_out_dims: [128, 32]
+    transformer_encoder_layers: 3
+    transformer_encoder_heads: 8
+
+  image_size: 224
+
+  # These numbers come from CLIP.
+  rgb_means:
+    - 0.48145466
+    - 0.4578275
+    - 0.40821073
+  rgb_stds:
+    - 0.26862954
+    - 0.26130258
+    - 0.27577711
+
+  clip:
+    # Must be in "RN50" or "RN50x16"
+    model_type: "RN50"
+
+  dino:
+    model_type: "dinov2_vits14"
+
+  codebook:
+    type: "learned" # random/learned/binary/
+    indexing: "softmax" # softmax/gumbel_softmax/topk_softmax/sparsemax
+    size: 256
+    code_dim: 10
+    dropout: 0.1
+    initialization: "random" # dictionary_learning/random
+    embeds: "joint_embeds" # obs_embeds, joint_embeds, beliefs
+    temperature: 1.
+    topk: 16 # topk softmax gating
+
+
+logging:
+  frequency: 1e3
+  plot_codebook: false
+
+training:
+  ppo_steps: 500000000
+  num_stages: 3
+  base_num_steps: 32 # 512 # 32
+  lr: 0.0003
+  num_mini_batch: 1
+  update_repeats: 4
+  num_steps: 128 # 2048 # 128
+  save_interval: 5_000_000
+  log_interval: 10_000
+  advance_scene_rollout_period: 20
+
+  use_attn_mask: true
+  use_transformer_encoder: false
+
+  gamma: 0.99
+  use_gae: true
+  gae_lambda: 0.95
+  max_grad_norm: 0.5
+
+  max_val_tasks: 200 # 200
+  max_test_tasks: 10
+
+  object_selection:
+    # The number of visibility points to sample when checking if an object is visible.
+    # Note: total number of visibility raycasts is then MAX_VIS_POINTS * MAX_AGENT_POSITIONS.
+    max_vis_points: 6
+
+    # The number of agent positions to sample when checking if an object is visible.
+    # Note: total number of visibility raycasts is then MAX_VIS_POINTS * MAX_AGENT_POSITIONS.
+    max_agent_positions: 6
+
+    # Epsilon Greedy probability of selecting the greedy (least common) target object.
+    p_greedy_target_object: 0.8
+
+evaluation:
+  test_on_validation: true
+  max_val_tasks: null
+  max_test_tasks: null
+  tasks: ["architecthor", "procthor-10k", "ithor"] # ["architecthor", "procthor-10k", "ithor", "robothor"]
+  minival: true
+
+mdp:
+  max_steps: 500
+  actions:
+    - MoveAhead
+    - RotateLeft
+    - RotateRight
+    - End
+    - LookUp
+    - LookDown
+  reward:
+    train:
+      step_penalty: -0.01
+      goal_success_reward: 10.0
+      failed_stop_reward: 0.0
+      shaping_weight: 1.0
+      reached_horizon_reward: 0.0
+      positive_only_reward: false
+    eval:
+      step_penalty: -0.01
+      goal_success_reward: 10.0
+      failed_stop_reward: 0.0
+      shaping_weight: 0.0
+      reached_horizon_reward: 0.0
+      positive_only_reward: false
+
+machine:
+  num_train_processes: ??? # 96
+  num_val_processes: 2
+  num_test_processes: 60
+
+  # leave empty to use all
+  num_train_gpus: null
+  num_val_gpus: 1
+  num_test_gpus: null
+
+# todo: support multiple agents!
+agent:
+  camera_width: 400
+  camera_height: 300
+  rotate_step_degrees: 30
+  visibility_distance: 1
+  step_size: 0.25
+
+wandb:
+  entity: null
+  project: null
+  name: null
+  dir: ./
+
+transformers:
+  # Turn on to speed initialization up, but requires
+  # having the datasets in ~/.cache/huggingface/
+  offline: "no"
+
+pretrained_model:
+  project: "procthor-models"
+  name: null
+  only_load_model_state_dict: true
+
+# OnPolicyRunner args
+callbacks: "" #wandb_logging
+checkpoint: null
+disable_tensorboard: false
+eval: false
+experiment: ???
+experiment_base: .
+extra_tag: ""
+output_dir: output
+seed: 42
+config_kwargs: null
+valid_on_initial_weights: false
+enable_crash_recovery: true
+restart_pipeline: false 
+
+ai2thor:
+  # Must be in "CloudRendering" or "Linux64"
+  platform: CloudRendering
+
+distributed:
+  # The machine_id of this node
+  machine_id: 0
+
+  # IP and port of the head distrubted process
+  ip_and_port: 127.0.0.1:0
+
+  # Number of distributed nodes
+  nodes: 1
+
+preprocessor_ckpt_path: none
+
+visualize: false

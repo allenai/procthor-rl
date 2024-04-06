@@ -1,0 +1,7 @@
+# For evaluation and fine-tuning on RoboTHOR and Habitat
+agent_mode: "locobot"
+field_of_view: 63.453048374758716
+
+# Agent camera's height from crouching and standing
+valid_agent_heights:
+  - 0.8697997
