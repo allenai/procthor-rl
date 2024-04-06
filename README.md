@@ -5,7 +5,7 @@ RL training scripts for learning an agent using ProcTHOR.
 ## 💻 Installation 💻
 
 ### 🐳 Use Docker Image 🐳
-or use docker image as described in [docker/README.md](docker/README.md).
+Please refer to [docker/README.md](docker/README.md) for more details.
 
 ### 🛠️ Manual Installation 🛠️
 ```bash
