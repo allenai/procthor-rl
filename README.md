@@ -106,7 +106,7 @@ Use scripts/download_ckpt.py to download the pretrained checkpoint:
 ```bash
 python scripts/download_ckpt.py --save_dir YOUR_CKPT_DIR --ckpt_ids CKPT_ID
 ```
-Options for `CKPT_ID`: `CLIP-GRU`, `DINOv2-GRU`, `CLIP-Codebook-GRU`, `DINOv2-Codebook-GRU`.
+Options for `CKPT_ID`: `CLIP-GRU`, `DINOv2-GRU`, `CLIP-CodeBook-GRU`, `DINOv2-CodeBook-GRU`.
 
 ### 📊 Evaluation 📊
 Evaluate in `ArchitecTHOR`, `ProcTHOR-10k`, `iTHOR`, or `RoboTHOR`:
