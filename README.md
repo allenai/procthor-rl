@@ -66,7 +66,7 @@ python procthor_objectnav/main.py \
     wandb.name=YOUR_WANDB_RUN_NAME \
     wandb.project=YOUR_WANDB_PROJECT_NAME \
     wandb.entity=YOUR_WANDB_ENTITY_NAME \
-    callbacks=wandb_logging \
+    callbacks=wandb_logging_callback \
     seed=100
 ```
 
@@ -116,10 +116,11 @@ python procthor_objectnav/main.py \
     experiment=procthor_objectnav/experiments/rgb_clipresnet50gru_ddppo \
     agent=locobot \
     target_object_types=robothor_habitat2022 \
+    machine.num_train_processes=1 \
     machine.num_test_processes=20 \
     ai2thor.platform=CloudRendering \
     model.add_prev_actions_embedding=true \
-    callbacks=wandb_logging \
+    callbacks=wandb_logging_callback \
     seed=100 \
     eval=true \
     evaluation.tasks=["architecthor"] \
