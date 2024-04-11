@@ -2,6 +2,8 @@
 
 RL training scripts for learning an agent using ProcTHOR.
 
+This codebase contains implementation of training and evaluation code used in [ProcTHOR](https://procthor.allenai.org/) and [Embodied-Codebook](https://embodied-codebook.github.io/).
+
 ## 💻 Installation 💻
 
 ### 🐳 Use Docker Image 🐳
@@ -133,3 +135,29 @@ python procthor_objectnav/main.py \
     output_dir=YOUR_OUTPUT_DIR # dir to store both qualitative and quantitative results
 ```
 `evaluation.tasks` can be `architecthor`, `procthor-10k`, `ithor`, or `robothor`.
+
+### 📚 Reference 📚
+
+If you find this codebase useful, please consider citing [ProcTHOR](https://arxiv.org/abs/2206.06994), [Embodied-Codebook](https://arxiv.org/abs/2311.04193), and [AllenAct](https://arxiv.org/abs/2008.12760):
+```
+@inproceedings{deitke2022️,
+  title={🏘️ ProcTHOR: Large-Scale Embodied AI Using Procedural Generation},
+  author={Deitke, Matt and VanderBilt, Eli and Herrasti, Alvaro and Weihs, Luca and Ehsani, Kiana and Salvador, Jordi and Han, Winson and Kolve, Eric and Kembhavi, Aniruddha and Mottaghi, Roozbeh},
+  booktitle={NeurIPS},
+  year={2022}
+}
+
+@inproceedings{eftekhar2023selective,
+  title={Selective Visual Representations Improve Convergence and Generalization for Embodied AI},
+  author={Eftekhar, Ainaz and Zeng, Kuo-Hao and Duan, Jiafei and Farhadi, Ali and Kembhavi, Ani and Krishna, Ranjay},
+  booktitle={ICLR},
+  year={2024}
+}
+
+@article{AllenAct,
+  author = {Luca Weihs and Jordi Salvador and Klemen Kotar and Unnat Jain and Kuo-Hao Zeng and Roozbeh Mottaghi and Aniruddha Kembhavi},
+  title = {AllenAct: A Framework for Embodied AI Research},
+  journal = {arXiv preprint arXiv:2008.12760},
+  year = {2020},
+}
+```
