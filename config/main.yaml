@@ -71,11 +71,6 @@ model:
     temperature: 1.
     topk: 16 # topk softmax gating
 
-
-logging:
-  frequency: 1e3
-  plot_codebook: false
-
 training:
   ppo_steps: 500000000
   num_stages: 3
@@ -178,7 +173,7 @@ pretrained_model:
   only_load_model_state_dict: true
 
 # OnPolicyRunner args
-callbacks: "" #wandb_logging
+callbacks: "" #wandb_logging_callback
 checkpoint: null
 disable_tensorboard: false
 eval: false
