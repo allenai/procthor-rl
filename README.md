@@ -37,7 +37,7 @@ Otherwise, please make sure have your `.git-credentials` file in the root direct
 Please note that we should now use `CloudRendering` for AI2THOR.
 If you find errors related to vulkan, please make sure install `vulkan-tools`, `libvulkan1`, and `vulkan-utils` correctly.️
 
-Training without wandb logging:
+**Training without wandb logging:**
 ```bash
 python procthor_objectnav/main.py \
     experiment=procthor_objectnav/experiments/rgb_clipresnet50gru_ddppo \
@@ -52,7 +52,7 @@ python procthor_objectnav/main.py \
     seed=100
 ```
 
-Training with wandb logging:
+**Training with wandb logging:**
 ```bash
 export WANDB_API_KEY=YOUR_WANDB_API_KEY
 python procthor_objectnav/main.py \
@@ -72,10 +72,10 @@ python procthor_objectnav/main.py \
     seed=100
 ```
 
-Training with Codebook bottleneck:
+**Training with Codebook bottleneck:**
 ```bash
 python procthor_objectnav/main.py \
-    experiment=procthor_objectnav/experiments/rgb_clipresnet50gru_ddppo \
+    experiment=procthor_objectnav/experiments/rgb_clipresnet50gru_codebook_ddppo \
     agent=locobot \
     target_object_types=robothor_habitat2022 \
     wandb.project=procthor-training \
@@ -87,7 +87,25 @@ python procthor_objectnav/main.py \
     seed=100
 ```
 
-Training with DINOv2 visual encoder:
+You can change the default values of the codebook hyperparameters such as the codebook size (`model.codebook.size` and `model.codebook.code_dim`) and codebook dropout (`model.codebook.dropout`):
+```bash
+python procthor_objectnav/main.py \
+    experiment=procthor_objectnav/experiments/rgb_clipresnet50gru_codebook_ddppo \
+    agent=locobot \
+    target_object_types=robothor_habitat2022 \
+    wandb.project=procthor-training \
+    machine.num_train_processes=96 \
+    machine.num_val_processes=4 \
+    ai2thor.platform=CloudRendering \
+    model.add_prev_actions_embedding=true \
+    procthor.p_randomize_materials=0.8 \
+    model.codebook.size=256 \
+    model.codebook.code_dim=10 \
+    model.codebook.dropout=0.1 \
+    seed=100
+```
+
+**Training with DINOv2 visual encoder:**
 ```bash
 python procthor_objectnav/main.py \
     experiment=procthor_objectnav/experiments/rgb_dinov2gru_ddppo \
