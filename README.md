@@ -2,7 +2,7 @@
 
 RL training scripts for learning an agent using ProcTHOR.
 
-This codebase contains implementation of training and evaluation code used in [ProcTHOR](https://procthor.allenai.org/) and [Embodied-Codebook](https://embodied-codebook.github.io/).
+This codebase contains implementation of training and evaluation code used in [ProcTHOR](https://procthor.allenai.org/), [Embodied-Codebook](https://embodied-codebook.github.io/), and the LoCoBot experiments in [PoliFormer](https://poliformer.allen.ai/).
 
 ## 💻 Installation 💻
 
@@ -120,13 +120,30 @@ python procthor_objectnav/main.py \
     seed=100
 ```
 
+**Training with DINOv2 ViTb + Transformer Encoder and Causal Transformer (PoliFormer):**
+```bash
+python procthor_objectnav/main.py \
+    experiment=procthor_objectnav/experiments/rgb_dinov2tsfm_ddppo \
+    agent=locobot \
+    target_object_types=robothor_habitat2022 \
+    wandb.project=procthor-training \
+    machine.num_train_processes=96 \
+    machine.num_val_processes=4 \
+    ai2thor.platform=CloudRendering \
+    model.add_prev_actions_embedding=true \
+    procthor.p_randomize_materials=0.8 \
+    model.dino.model_type=dinov2_vitb14 \
+    training.use_transformer_encoder=true \
+    seed=100
+```
+
 ### 💾 Download Pretrained Checkpoint 💾
 
 Use scripts/download_ckpt.py to download the pretrained checkpoint:
 ```bash
 python scripts/download_ckpt.py --save_dir YOUR_CKPT_DIR --ckpt_ids CKPT_ID
 ```
-Options for `CKPT_ID`: `CLIP-GRU`, `DINOv2-GRU`, `CLIP-CodeBook-GRU`, `DINOv2-CodeBook-GRU`.
+Options for `CKPT_ID`: `CLIP-GRU`, `DINOv2-GRU`, `CLIP-CodeBook-GRU`, `DINOv2-CodeBook-GRU`, `DINOv2-ViTs-TSFM`, `DINOv2-ViTb-TSFM`.
 
 ### 📊 Evaluation 📊
 Evaluate in `ArchitecTHOR`, `ProcTHOR-10k`, `iTHOR`, or `RoboTHOR`:
@@ -153,10 +170,11 @@ python procthor_objectnav/main.py \
     output_dir=YOUR_OUTPUT_DIR # dir to store both qualitative and quantitative results
 ```
 `evaluation.tasks` can be `architecthor`, `procthor-10k`, `ithor`, or `robothor`.
+`procthor_objectnav/experiments/rgb_clipresnet50gru_ddppo` can be replaced with other experiments such as `rgb_clipresnet50gru_codebook_ddppo`, `rgb_dinov2gru_ddppo`, `rgb_dinov2tsfm_ddppo`, etc.
 
 ### 📚 Reference 📚
 
-If you find this codebase useful, please consider citing [ProcTHOR](https://arxiv.org/abs/2206.06994), [Embodied-Codebook](https://arxiv.org/abs/2311.04193), and [AllenAct](https://arxiv.org/abs/2008.12760):
+If you find this codebase useful, please consider citing [ProcTHOR](https://arxiv.org/abs/2206.06994), [Embodied-Codebook](https://arxiv.org/abs/2311.04193), [PoliFormer](https://poliformer.allen.ai/), and [AllenAct](https://arxiv.org/abs/2008.12760):
 ```
 @inproceedings{deitke2022️,
   title={🏘️ ProcTHOR: Large-Scale Embodied AI Using Procedural Generation},
@@ -169,6 +187,13 @@ If you find this codebase useful, please consider citing [ProcTHOR](https://arxi
   title={Selective Visual Representations Improve Convergence and Generalization for Embodied AI},
   author={Eftekhar, Ainaz and Zeng, Kuo-Hao and Duan, Jiafei and Farhadi, Ali and Kembhavi, Ani and Krishna, Ranjay},
   booktitle={ICLR},
+  year={2024}
+}
+
+@inproceedings{zeng2024poliformer,
+  title={Poliformer: Scaling on-policy rl with transformers results in masterful navigators},
+  author={Zeng, Kuo-Hao and Zhang, Zichen and Ehsani, Kiana and Hendrix, Rose and Salvador, Jordi and Herrasti, Alvaro and Girshick, Ross and Kembhavi, Aniruddha and Weihs, Luca},
+  booktitle={CoRL},
   year={2024}
 }
 

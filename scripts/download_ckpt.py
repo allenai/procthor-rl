@@ -9,6 +9,8 @@ ALL_CKPT_IDS = {
     "CLIP-CodeBook-GRU": "exp_ObjectNav-RGB-ClipResNet50GRU-DDPPO-CodeBook__stage_02__steps_000420684456.pt",
     "DINOv2-GRU": "exp_ObjectNav-RGB-DINOv2GRU-DDPPO__stage_02__steps_000400477104.pt",
     "DINOv2-CodeBook-GRU": "exp_ObjectNav-RGB-DINOv2GRU-DDPPO-CodeBook__stage_02__steps_000405359832.pt",
+    "DINOv2-ViTs-TSFM": "exp_ObjectNav-RGB-DINOv2-TSFM-TX-ENCODER-DDPPO__stage_02__steps_000437127636.pt",
+    "DINOv2-ViTb-TSFM": "exp_ObjectNav-RGB-DINOv2-ViTb-TSFM-TX-ENCODER-DDPPO__stage_02__steps_000435703596.pt",
 }
 
 

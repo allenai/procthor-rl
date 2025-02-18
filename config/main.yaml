@@ -84,7 +84,7 @@ training:
   advance_scene_rollout_period: 20
 
   use_attn_mask: true
-  use_transformer_encoder: false
+  use_transformer_encoder: true
 
   gamma: 0.99
   use_gae: true
